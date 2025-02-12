@@ -1,0 +1,27 @@
+class Solution {
+public:
+int digitsum(int num){
+      int sum=0;
+      while(num>0){
+        int r=num%10;
+        sum+=r;
+        num=num/10;
+      }
+      return sum;
+}
+    int maximumSum(vector<int>& nums) {
+        int ans=-1;
+        unordered_map<int,int>mp;
+        for(int num:nums){
+            int key=digitsum(num);
+            if(mp.find(key)!=mp.end()){
+             ans=max(ans,mp[key]+num);
+             mp[key]=max(mp[key],num);
+            }
+            else{
+                mp[key]=num;
+            }
+        }
+        return ans;
+    }
+};

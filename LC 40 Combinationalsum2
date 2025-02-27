@@ -1,0 +1,80 @@
+class Solution {
+public:
+vector<int>nse(vector<int>& a){
+    stack<int>s;
+    vector<int>ans(a.size());
+    for(int i=a.size()-1;i>=0;i--){
+        while(!s.empty() && a[s.top()]>a[i]){
+            s.pop();
+        }
+        if(s.empty()){
+            ans[i]=a.size();
+        }
+        else{
+            ans[i]=s.top();
+        }
+        s.push(i);
+        
+    }
+    return ans;
+}
+vector<int>pse(vector<int>& a){
+    stack<int>s;
+    vector<int>ans(a.size());
+    for(int i=0;i<a.size();i++){
+        while(!s.empty() && a[s.top()]>=a[i]){
+            s.pop();
+        }
+        if(s.empty()){
+            ans[i]=-1;
+        }
+        else{
+            ans[i]=s.top();
+        }
+        s.push(i);
+       
+    }
+     return ans;
+}
+    int sumSubarrayMins(vector<int>& a){
+    vector<int>nsei=nse(a);
+        vector<int>psei=pse(a);
+          
+        long long sum=0;
+        int mod=(int)(1e9+7);
+       for(int i=0;i<a.size();i++){
+        long long left=i-psei[i];
+        long long right=nsei[i]-i;
+        sum=(sum+(a[i]*left%mod)*right%mod)%mod;
+       } 
+        return sum;
+    }
+   
+};sum-of-subarray-minimums LC907
+
+class Solution {
+public:
+void combination(int indx,int target,vector<int>& candidates, vector<vector<int>>&ans,vector<int>&curr){
+    if(target==0){
+        ans.push_back(curr);
+        return;
+    }
+    for(int i=indx;i< candidates.size();i++){
+   if(i>indx &&  candidates[i]== candidates[i-1]) continue;
+   if( candidates[i]> target) break;
+        curr.push_back(candidates[i]);
+        combination(i+1,target-candidates[i],candidates,ans,curr);
+        curr.pop_back();
+    }
+   
+  
+}
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>>ans;
+        vector<int>curr;
+        sort( candidates.begin(), candidates.end());
+        combination(0,target,candidates,ans,curr);
+        
+        return ans;
+    }
+};

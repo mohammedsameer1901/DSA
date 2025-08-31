@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<vector<int>> sortMatrix(vector<vector<int>>& grid) {
+    int n=grid.size();
+    int m=grid[0].size();
+     unordered_map<int,priority_queue<int>>maxh;
+    unordered_map<int, priority_queue<int,vector<int>,greater<int>>>minh; 
+     for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            int key=i-j;
+            if(key<0){
+                minh[key].push(grid[i][j]);
+            }
+            else{
+                maxh[key].push(grid[i][j]);
+            }
+        }
+     }
+     for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            int key=i-j;
+            if(key<0){
+                grid[i][j]=minh[key].top();
+                minh[key].pop();
+            }
+            else{
+                grid[i][j]=maxh[key].top();
+                maxh[key].pop();
+            }
+        }
+     }
+     return grid;
+    }
+};

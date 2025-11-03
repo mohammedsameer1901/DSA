@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxDifference(string s) {
+         map<char,int>mp;
+        for(char i:s){
+            mp[i]++;
+        }
+        int ans=0;
+        int e=INT_MAX,o=0;
+        for(auto &it:mp){
+            int n=it.second;
+            if(n%2==0){
+                e=min(e,n);
+            }
+            else{
+                o=max(o,n);
+            }
+            
+        }
+        if(e==INT_MAX) return 0;
+        return o-e;
+    }
+};
